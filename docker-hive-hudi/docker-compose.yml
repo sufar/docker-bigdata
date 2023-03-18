@@ -49,4 +49,4 @@ services:
 
 networks:
   bigdata:
-    name: bigdata
+    external: true

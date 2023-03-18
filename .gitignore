@@ -1,0 +1,7 @@
+target/
+.settings/
+.metals/
+.bloop/
+metastore_db/
+*.log
+out/
