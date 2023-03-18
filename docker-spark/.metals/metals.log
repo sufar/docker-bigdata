@@ -1,0 +1,2 @@
+2023.03.17 16:46:22 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /data/github/docker-bigdata/docker-spark/.metals/lsp.trace.json or /home/zugle/.cache/metals/lsp.trace.json[0m
+2023.03.17 16:46:22 INFO  logging to file /data/github/docker-bigdata/docker-spark/examples/maven/.metals/metals.log[0m
