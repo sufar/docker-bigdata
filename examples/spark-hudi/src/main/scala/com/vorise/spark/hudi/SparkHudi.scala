@@ -8,26 +8,11 @@ import org.apache.spark.sql.{DatasetUtil, SparkSession}
 object SparkHudi extends Logging {
 
   def main(args: Array[String]): Unit = {
-    log.info("SparkHudi开始")
-
-//    if (args == null || args.length < 1) {
-//      throw  new RuntimeException("请输入要查询的数据库表, 格式: db.table, 如: liao.test_student")
-//    }
-//
-//    val hiveTableName = args(0)
-//    if (!hiveTableName.contains(".")) {
-//      throw  new RuntimeException("请输入要查询的数据库表, 格式: db.table, 如: liao.test_student")
-//    }
-
-//    val hiveTableName = "aaa.hudi_cow_pt_tbl"
-
-    System.setProperty("HADOOP_USER_NAME", "hive")
+    log.info("SparkHudi starting...")
+    // System.setProperty("HADOOP_USER_NAME", "hive")
 
     val sparkConf = new SparkConf()
       .setMaster("spark://localhost:7077")
-      // .setMaster("yarn-cluster")
-      // .setMaster("yarn")
-      // .setMaster("yarn-standalone")
       .setAppName("SparkHudi读取表数据")
     sparkConf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     sparkConf.set("spark.sql.extensions", "org.apache.spark.sql.hudi.HoodieSparkSessionExtension")
@@ -44,7 +29,7 @@ object SparkHudi extends Logging {
       // .set("spark.driver.port", "20002")
       // .set("spark.blockManager.port", "6066")
       // .set("spark.driver.bindAddress", "0.0.0.0")
-      .set("spark.driver.blockManager.port", "20003")
+      // .set("spark.driver.blockManager.port", "20003")
       // .set("spark.driver.host", "172.17.42.201")
 
     sparkConf.getAll.foreach(println)
@@ -57,13 +42,26 @@ object SparkHudi extends Logging {
 
     spark.sql("show databases").show()
 
-    val hive_table = """
-      | create table test2 (id int, name string)
+    val tableName = "test3"
+
+    val createSql = s"""
+      | create table $tableName (id int, name string)
       |""".stripMargin
+    println(createSql)
+    spark.sql(createSql)
 
-    println(hive_table)
+    val insertSql = s"""
+    | insert into $tableName select 1 id, 'zugle' name
+    """.stripMargin
+    println(insertSql)
+    spark.sql(insertSql)
 
-    spark.sql(hive_table)
+    val selectSql = s"""
+    | select * from $tableName limit 10
+    """.stripMargin
+    println(selectSql)
+    spark.sql(selectSql)
+
     spark.stop()
     return
     val timestamp_sql =

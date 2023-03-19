@@ -7,9 +7,11 @@ services:
     restart: always
     networks:
         - bigdata
+    extra_hosts:
+      - "${HOST_NAME}:${HOST_IP}"
     ports:
       - 9870:9870
-      - "0.0.0.0:9000:9000"
+      - "9000:9000"
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
@@ -23,6 +25,8 @@ services:
     restart: always
     networks:
         - bigdata
+    extra_hosts:
+      - "${HOST_NAME}:${HOST_IP}"
     ports:
       - 9864:9864
     volumes:
@@ -38,6 +42,8 @@ services:
     restart: always
     networks:
         - bigdata
+    extra_hosts:
+      - "${HOST_NAME}:${HOST_IP}"
     ports:
       - 8088:8088
     environment:
@@ -51,6 +57,8 @@ services:
     restart: always
     networks:
         - bigdata
+    extra_hosts:
+      - "${HOST_NAME}:${HOST_IP}"
     ports:
       - 8042:8042
     environment:
@@ -64,6 +72,8 @@ services:
     restart: always
     networks:
         - bigdata
+    extra_hosts:
+      - "${HOST_NAME}:${HOST_IP}"
     ports:
       - 8188:8188
     environment:
@@ -80,4 +90,4 @@ volumes:
 
 networks:
   bigdata:
-    external: true
+    name: bigdata
